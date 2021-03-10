@@ -1,4 +1,7 @@
 <?php
+
+Route::get('/telegram', 'TelegramNotificationController@toTelegram');
+
 Route::get('/', 'TicketController@create');
 Route::get('/allticket', 'TicketController@index');
 Route::get('/home', function () {
@@ -54,4 +57,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Peminjaman 
+    //upload peminjaman
+    Route::post('peminjaman/upload', 'PeminjamanController@upload')->name('peminjaman.upload');
+    //mass destroy
+    Route::delete('peminjaman/destroy', 'PeminjamanController@massDestroy')->name('peminjaman.massDestroy');
+    //range report laporan peminjaman
+    Route::get('peminjaman/rangeReport', 'PeminjamanController@rangeReport')->name('peminjaman.rangeReport');
+    //peminjaman pengembalian
+    Route::get('peminjaman/{id}/pengembalian', 'PeminjamanController@pengembalian')->name('peminjaman.pengembalian');
+    //updatePengembalian
+    Route::put('peminjaman/{id}/pengembalian', 'PeminjamanController@pengembalianUpdate')->name('peminjaman.updatePengembalian');
+    Route::resource('peminjaman', 'PeminjamanController');
+
+    // Kunci
+    Route::resource('kunci', 'KunciController');
 });
