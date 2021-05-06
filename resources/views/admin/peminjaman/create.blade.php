@@ -78,7 +78,7 @@
             </div> -->
             <div class="form-group">
                 <label for="photo">{{ trans('Photo') }}</label>
-                <input type="file" id="photo" name="photo" class="form-group">
+                <input type="file" id="photo" name="photo" class="filepond">
             </div>
             <br>
             <br>
@@ -131,9 +131,15 @@
 
     const inputElement = document.querySelector('input[id="photo"]');
     const pond = FilePond.create( inputElement );
-
     FilePond.setOptions({
-        server: '/admin/peminjaman/upload'
-    });
+        server: {
+            url: '/admin/peminjaman',
+            process: '/upload',
+            revert: '/upload',
+            headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }
+    })
 </script>
 @endsection
